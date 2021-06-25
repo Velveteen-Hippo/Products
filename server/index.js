@@ -4,6 +4,14 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+
+// ROUTES
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// app.use(express.static(__dirname + '/../client/dist'))
+
 app.get('/products', function (req, res) {
   res.send('Retrieves the list of products.')
 })
