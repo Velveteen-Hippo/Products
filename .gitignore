@@ -1,1 +1,4 @@
 data-raw
+package-lock.json
+node_modules
+database/config.js

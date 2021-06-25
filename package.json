@@ -1,0 +1,26 @@
+{
+  "name": "sdc-products-api",
+  "version": "1.0.0",
+  "description": "system-design-capstone-products",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Velveteen-Hippo/sdc-overview.git"
+  },
+  "author": "David Harbin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Velveteen-Hippo/sdc-overview/issues"
+  },
+  "homepage": "https://github.com/Velveteen-Hippo/sdc-overview#readme",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "express": "^4.17.1",
+    "pg": "^8.6.0",
+    "underscore": "^1.13.1"
+  }
+}
