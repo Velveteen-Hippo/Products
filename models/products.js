@@ -26,7 +26,7 @@ const getStyles = function(product_id, callback) {
 };
 
 const getRelated = function(product_id,  callback) {
-	const selectRelated = `SELECT * FROM ????????? WHERE id = ${product_id}`;
+	const selectRelated = `SELECT * FROM related_products WHERE current_product_id = ${product_id}`;
 
 	pg.query(selectRelated, function(err, results) {
 		callback(err, results.rows);
