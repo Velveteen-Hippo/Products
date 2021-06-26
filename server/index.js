@@ -1,35 +1,53 @@
 const express = require('express');
-// const db = require('../database-pg');
+const products = require('../models/products')
 
 const app = express();
 const PORT = 3000;
 
-
-// ROUTES
-
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// app.use(express.static(__dirname + '/../client/dist'))
+// Get all products default parameters: page=1, count=5
+app.get('/products', (req, res) => {
+  req.params.page = Number(req.query.page) || 1;
+  req.params.count = Number(req.query.count) || 6;
 
-app.get('/products', function (req, res) {
-  res.send('Retrieves the list of products.')
-})
+  products.getAllProducts(req.params, (err, results) => {
+    err ? res.status(400).send('Error in getAllProducts', err)
+      : res.status(200).send(results);
+  });
+});
 
-app.get('/products/:product_id', function (req, res) {
-  res.send('Returns all product level information for a specified product id.')
-})
+// Get one product by it's ID
+app.get('/products/:product_id', (req, res) => {
+  const id = Number(req.params.product_id);
 
-app.get('/products/:product_id/styles', function (req, res) {
-  res.send('Returns the all styles available for the given product.')
-})
+  products.getOneProduct(id, (err, results) => {
+    err ? res.status(400).send(`Error getting product id of: ${id}`, err)
+      : res.status(200).send(results);
+  });
+});
 
-app.get('/products/:product_id/related', function (req, res) {
-  res.send('Returns the id\'s of products related to the product specified')
-})
+// Get all styles of one product by it's ID
+app.get('/products/:product_id/styles', (req, res) => {
+  const id = Number(req.params.product_id);
+
+  products.getStyles(id, (err, results) => {
+    err ? res.status(400).send(`Error getting styles for product id of: ${id}`, err)
+      : res.status(200).send(results);
+  });
+});
+
+// Get products related to a product ID
+app.get('/products/:product_id/related', (req, res) => {
+  const id = Number(req.params.product_id);
+
+  products.getRelated(id, (err, results) => {
+    err ? res.status(400).send(`Error getting related products for product id of: ${id}`, err)
+      : res.status(200).send(results);
+  })
+});
+
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
-
