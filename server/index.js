@@ -17,7 +17,8 @@ app.get('/products', (req, res) => {
   });
 });
 
-// Get one product by it's ID
+// Get one product by it's ID.  Include features.
+
 app.get('/products/:product_id', (req, res) => {
   const id = Number(req.params.product_id);
 

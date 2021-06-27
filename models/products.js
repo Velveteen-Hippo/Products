@@ -1,34 +1,34 @@
 // import connection to psql db
-const pg = require('../database');
+const postgres = require('../database');
 
-const getAllProducts = function(requestParams, callback) {
-	const selectProducts = `SELECT * FROM products WHERE id < ${requestParams.count}`;
+const getAllProducts = (requestParams, callback) => {
+	const qString = `SELECT * FROM products WHERE id < ${requestParams.count}`;
 
-	pg.query(selectProducts, function(err, results) {
+	postgres.query(qString, (err, results) => {
 		callback(err, results.rows)
 	});
 };
 
-const getOneProduct = function(product_id, callback) {
-	const selectProduct = `SELECT * FROM products WHERE id = ${product_id}`;
+const getOneProduct = (product_id, callback) => {
+	const qString = `SELECT products.id, name, slogan, description, category, default_price, jsonb_agg(json_build_object('feature', features.feature, 'value', features.value)) as features FROM products JOIN features ON features.product_id = products.id WHERE products.id = $1 GROUP BY products.id`;
 
-	pg.query(selectProduct, function(err, results) {
+	postgres.query(qString, [product_id], (err, results) => {
+		callback(err, results.rows[0]);
+	});
+};
+
+const getStyles = (product_id, callback) => {
+	const qString = `SELECT * FROM styles WHERE product_id = ${product_id}`;
+
+	postgres.query(qString, (err, results) => {
 		callback(err, results.rows);
 	});
 };
 
-const getStyles = function(product_id, callback) {
-	const selectStyles = `SELECT * FROM styles WHERE product_id = ${product_id}`;
+const getRelated = (product_id, callback) => {
+	const qString = `SELECT * FROM related_products WHERE current_product_id = ${product_id}`;
 
-	pg.query(selectStyles, function(err, results) {
-		callback(err, results.rows);
-	});
-};
-
-const getRelated = function(product_id,  callback) {
-	const selectRelated = `SELECT * FROM related_products WHERE current_product_id = ${product_id}`;
-
-	pg.query(selectRelated, function(err, results) {
+	postgres.query(qString, (err, results) => {
 		callback(err, results.rows);
 	});
 };
@@ -44,7 +44,7 @@ module.exports = {
 // aggregate functions?
   //  'jsonB' add array/objs sent to client
 
-// explain command while optimizing
+// use the explain command while optimizing
 // 'create index in postgres'
 // \timing command -
 

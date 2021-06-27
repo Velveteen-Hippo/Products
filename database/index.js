@@ -1,7 +1,7 @@
 const { Pool, Client } = require('pg')
-const db = require('./config')
+const dbConfig = require('./config')
 
-const pool = new Pool(db);
+const pool = new Pool(dbConfig);
 
 
 pool.connect((err) => {
