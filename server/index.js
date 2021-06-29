@@ -18,7 +18,6 @@ app.get('/products', (req, res) => {
 });
 
 // Get one product by it's ID.  Include features.
-
 app.get('/products/:product_id', (req, res) => {
   const id = Number(req.params.product_id);
 
@@ -43,8 +42,12 @@ app.get('/products/:product_id/related', (req, res) => {
   const id = Number(req.params.product_id);
 
   products.getRelated(id, (err, results) => {
+    let relatedIdsOnly = [];
+    for (var i = 0; i < results.length; i++) {
+      relatedIdsOnly.push(results[i].related_product_id)
+    }
     err ? res.status(400).send(`Error getting related products for product id of: ${id}`, err)
-      : res.status(200).send(results);
+      : res.status(200).send(relatedIdsOnly);
   })
 });
 

@@ -7,9 +7,9 @@ const getAllProducts = (requestParams, callback) => {
 
 	const qString =
 	  `SELECT * FROM products
-		WHERE id between ${rangeBottom} and ${rangeTop}`;
+		WHERE id between $1 and $2`;
 
-	postgres.query(qString, (err, results) => {
+	postgres.query(qString, [rangeBottom, rangeTop], (err, results) => {
 		callback(err, results.rows)
 	});
 };
@@ -61,9 +61,12 @@ const getStyles = (product_id, callback) => {
 };
 
 const getRelated = (product_id, callback) => {
-	const qString = `SELECT * FROM related_products WHERE current_product_id = ${product_id}`;
+	const qString =
+	`SELECT related_product_id
+	FROM related_products
+	WHERE current_product_id = $1`;
 
-	postgres.query(qString, (err, results) => {
+	postgres.query(qString, [product_id], (err, results) => {
 		callback(err, results.rows);
 	});
 };
@@ -74,14 +77,3 @@ module.exports = {
 	getStyles,
 	getRelated
 };
-
-// left joins in queries
-// aggregate functions?
-  //  'jsonB' add array/objs sent to client
-
-// use the explain command while optimizing
-// 'create index in postgres'
-// \timing command -
-
-
-// aggregate tables ?
