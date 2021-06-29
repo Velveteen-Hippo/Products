@@ -9,7 +9,7 @@ app.use(express.json());
 // Get all products default parameters: page=1, count=5
 app.get('/products', (req, res) => {
   req.params.page = Number(req.query.page) || 1;
-  req.params.count = Number(req.query.count) || 6;
+  req.params.count = Number(req.query.count) || 5;
 
   products.getAllProducts(req.params, (err, results) => {
     err ? res.status(400).send('Error in getAllProducts', err)
