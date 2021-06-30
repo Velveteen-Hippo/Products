@@ -1,1 +1,1 @@
-SELECT * FROM products WHERE id between 1 and 5;
+explain analyze SELECT * FROM products WHERE id between 1 and 5;

@@ -1,5 +1,4 @@
--- explain analyze select * from products limit 500000
-SELECT
+explain analyze SELECT
   products.id,
   name,
   slogan,

@@ -1,4 +1,4 @@
-SELECT
+explain analyze SELECT
 	  styles.id,
 		name,
 		sale_price,
