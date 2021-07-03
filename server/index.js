@@ -10,7 +10,7 @@ app.use(express.json());
 app.get('/products', (req, res) => {
   req.params.page = Number(req.query.page) || 1;
   req.params.count = Number(req.query.count) || 5;
-
+  console.log('somebody hit me');
   products.getAllProducts(req.params, (err, results) => {
     err ? res.status(400).send('Error in getAllProducts', err)
       : res.status(200).send(results);
