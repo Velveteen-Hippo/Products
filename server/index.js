@@ -1,10 +1,12 @@
 const express = require('express');
 const products = require('../models/products')
 
+const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cors());
 
 // Get all products default parameters: page=1, count=5
 app.get('/products', (req, res) => {
