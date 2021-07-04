@@ -1,10 +1,10 @@
-explain analyze SELECT
+SELECT
 	  styles.id,
 		name,
 		sale_price,
 		original_price,
 		default_style,
-	jsonb_agg(json_build_object(
+	jsonb_agg(distinct jsonb_build_object(
 		'thumbnail_url', photos.thumbnail_url,
 		'url', photos.url)) as photos,
   jsonb_object_agg(

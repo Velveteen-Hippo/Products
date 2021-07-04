@@ -56,7 +56,7 @@ const getStyles = (product_id, callback) => {
 	GROUP BY styles.id`;
 
 	postgres.query(qString, [product_id], (err, results) => {
-		callback(err, results.rows[0]);
+		callback(err, results.rows);
 	});
 };
 
